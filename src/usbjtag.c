@@ -213,6 +213,7 @@ static void usbjtag_data_rx_st(usbd_device *usbd_dev, uint8_t ep)
 	if(len == 2)
 		speed = buf[0] | buf[1] << 8;
 	printf("EP8: %d bytes\r\n", len);
+	rx_count = 0;
 	
 }
 
