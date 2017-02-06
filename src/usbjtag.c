@@ -177,16 +177,17 @@ static void usbjtag_data_rx_cb(usbd_device *usbd_dev, uint8_t ep)
 		{
 			uint8_t io_state = 0;
 			if(i & 0x01)
-				rx_buf[(i >> 1) + rx_count * 64] |= (GPIOA_IDR & 0x01) << 4;
+				rx_buf[(i >> 1)] = (GPIOA_IDR & 0x01);
 			else
-				rx_buf[(i >> 1) + rx_count * 64] =  (GPIOA_IDR & 0x01);
+				rx_buf[(i >> 1)] |=  (GPIOA_IDR & 0x01) << 4;
 				
-			io_state = ((buf[i >> 1] >> ((i & 0x01) ? 4: 0)) & 0x0f) << 1;
+			io_state = ((buf[i >> 1] >> ((i & 0x01) ? 0: 4)) & 0x0f) << 1;
 			GPIOA_BSRR = io_state + (((~(io_state)) & 0x0f) << 16);
 		}
-		rx_count ++;
+		while(usbd_ep_write_packet(usbd_dev_handler, 0x82, rx_buf, 64) == 0);
+		//rx_count ++;
 	}
-	if(rx_count >= 8)
+	/*if(rx_count >= 8)
 	{
 		while(usbd_ep_write_packet(usbd_dev_handler, 0x82, &rx_buf[0], 64) == 0);
 		while(usbd_ep_write_packet(usbd_dev_handler, 0x82, &rx_buf[64], 64) == 0);
@@ -198,7 +199,7 @@ static void usbjtag_data_rx_cb(usbd_device *usbd_dev, uint8_t ep)
 		while(usbd_ep_write_packet(usbd_dev_handler, 0x82, &rx_buf[448], 64) == 0);
 		rx_count = 0;
 		printf("EP2: 512 bytes\r\n");
-	}
+	}*/
 	printf("EP6: %d bytes\r\n", len);
 	
 }
