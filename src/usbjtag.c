@@ -144,7 +144,7 @@ static void usb_int_relay(void) {
 }
 /* For bit-banging usage */
 int rx_count = 0;
-uint8_t rx_buf[512];
+uint8_t rx_buf[64];
 
 /* USB function */
 static int usbjtag_control_request(usbd_device *usbd_dev, struct usb_setup_data *req, uint8_t **buf,
@@ -173,16 +173,20 @@ static void usbjtag_data_rx_cb(usbd_device *usbd_dev, uint8_t ep)
 	int len = usbd_ep_read_packet(usbd_dev, 0x06, buf, 64);
 
 	if (len) {
+		memset(rx_buf, 0x00, 64);
 		for(i = 0; i < 128; i++)
 		{
 			uint8_t io_state = 0;
 			if(i & 0x01)
-				rx_buf[(i >> 1)] = (GPIOA_IDR & 0x01);
+				rx_buf[(i >> 1)] |= (GPIOA_IDR & 0x01);
 			else
-				rx_buf[(i >> 1)] |=  (GPIOA_IDR & 0x01) << 4;
+				rx_buf[(i >> 1)] =  (GPIOA_IDR & 0x01) << 4;
 				
 			io_state = ((buf[i >> 1] >> ((i & 0x01) ? 0: 4)) & 0x0f) << 1;
-			GPIOA_BSRR = io_state + (((~(io_state)) & 0x0f) << 16);
+			GPIOA_BSRR = io_state + (((~(io_state)) & 0x0e) << 16);
+			int j;
+			for(j = 0; j < 40;j++)
+			__asm__("nop");
 		}
 		while(usbd_ep_write_packet(usbd_dev_handler, 0x82, rx_buf, 64) == 0);
 		//rx_count ++;
@@ -307,7 +311,7 @@ int main(void)
 	for (i = 0; i < 0x80000; i++)
 		__asm__("nop");
 
-	gpio_set(GPIOA, GPIO8);
+	gpio_set(GPIOA, GPIO8 | GPIO0);
 	printf("Main entry\r\n");
 	i = 0;
 	while (1)
