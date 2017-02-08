@@ -3,6 +3,11 @@ Description
 
 A fully-opensource bit-banging USB-JTAG adapter for Anlogic FPGA debugger.
 
+Dependence
+--------------
+
+libopencm3 library, GNU make, GNU ARM-baremetal-toolchain (arm-none-eabi-gcc), dfu-utils.
+
 Hardware requirement and IO assignment
 --------------
 
@@ -22,6 +27,7 @@ PA9  - BOOT_ENTRY
 
 PB12 - STATUS_LED with positive polarity
 
+
 Build
 --------------
 
@@ -35,6 +41,11 @@ This firmware requires a bootloader which called dapboot.
 Try my branch https://github.com/rgwan/dapboot, target is "MSC".
 
 And use "make dfu" to flash your microcontroller via USB DFU protocol.
+
+License
+--------------
+
+LGPLv3
 
 Contribution
 --------------
