@@ -1,7 +1,7 @@
 Description
 ======
 
-A fully-opensource bit-banging USB-JTAG adapter for Anlogic FPGA debugger.
+A USB-JTAG debugger for Anlogic platform. For some problem, the source has been removed and the license has been changed.
 
 Dependence
 --------------
@@ -25,29 +25,31 @@ PA8  - USB_PULLUP
 
 PA9  - BOOT_ENTRY
 
-PB12 - STATUS_LED with positive polarity
-
-
-Build
---------------
-
-Enter the src directory, and type "make"
+PB11 - STATUS_LED with positive polarity
 
 Flash
 --------------
 
-This firmware requires a bootloader which called dapboot.
+This firmware contains a bootloader, which is opensource from dapboot. The firmware folder contains three files:
 
-Try my branch https://github.com/rgwan/dapboot, target is "MSC".
+bootloader.fwb, The bootloader, you can use STVP or stm32flash to flash into a blank chip.
 
-And use "make dfu" to flash your microcontroller via USB DFU protocol.
+firmware.fwb, The firmware, you HAVE TO use dfu-utils or anlogic dfu tool to flash into a chip which already contains a bootloader.
+
+flash.fwb, The firmware and the bootloader. You can use STVP or stm32flash to flash it into a blank chip, and it does work, not require you use dfu-utils to flash again.
+
+I'm sorry I can't fully open this stuff's source, but I hope you like it!
 
 License
 --------------
 
-LGPLv3
+EULA
 
 Contribution
 --------------
 
-Zhiyuan Wan 2017
+Zhiyuan Wan.
+
+Anlogic Information.
+
+2017
