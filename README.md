@@ -11,7 +11,7 @@ libopencm3 library, GNU make, GNU ARM-baremetal-toolchain (arm-none-eabi-gcc), d
 Hardware requirement and IO assignment
 --------------
 
-It requires a STM32F103C8T6 or equal microcontroller(GD32/MM32/BLM32) with 8MHz external crystal.
+It requires a STM32F103C8T6 or equal microcontroller(GD32) with 8MHz external crystal.
 
 PA0 - JTAG TDO
 
@@ -36,9 +36,21 @@ bootloader.fwb, The bootloader, you can use STVP or stm32flash to flash into a b
 
 firmware.fwb, The firmware, you HAVE TO use dfu-utils or anlogic dfu tool to flash into a chip which already contains a bootloader.
 
-flash.fwb, The firmware and the bootloader. You can use STVP or stm32flash to flash it into a blank chip, and it does work, not require you use dfu-utils to flash again.
+flash.bin, The firmware and the bootloader. You can use STVP or stm32flash to flash it into a blank chip, and it does work, not require you use dfu-utils to flash again.
 
 I'm sorry I can't fully open this stuff's source, but I hope you like it!
+
+Schematic & BUILD
+--------------
+
+It is located in 'schematic' directory. You can make one yourself.
+
+Buy
+--------------
+
+Contact Anlogic Technologies.
+
+Website: www.anlogic.com
 
 License
 --------------

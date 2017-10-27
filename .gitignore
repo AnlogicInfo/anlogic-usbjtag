@@ -1,5 +1,5 @@
 *.o
-*.bin
+src/*.bin
 *.hex
 *~
 *.map
