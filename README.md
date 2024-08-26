@@ -38,7 +38,7 @@ firmware.fwb, The firmware, you HAVE TO use dfu-utils or anlogic dfu tool to fla
 
 flash.bin, The firmware and the bootloader. You can use STVP or stm32flash to flash it into a blank chip, and it does work, not require you use dfu-utils to flash again.
 
-I'm sorry I can't fully open this stuff's source, but I hope you like it!
+I'm sorry I can't fully open this stuff's source, but I hope you like it! This repository also contains GD32F150 version of anlogic-usbjtag firmware.
 
 Schematic & BUILD
 --------------
